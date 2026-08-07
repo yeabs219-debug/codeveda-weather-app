@@ -33,11 +33,9 @@ button,
 input {
   font: inherit;
 }
-
 button {
   cursor: pointer;
 }
-
 .app {
   min-height: 100vh;
 }
