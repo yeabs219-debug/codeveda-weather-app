@@ -8,17 +8,17 @@ A responsive weather application built with **React.js** and **WeatherAPI**. The
 
 ## 📸 Screenshots
 
-### Current Weather
+### city suggestion
 
-![Current Weather](./screenshots/weather-main.png)
+![Current Weather](./screenshots/Screenshot 1.png)
 
 ### Hourly & Daily Forecast
 
-![Forecast](./screenshots/hourly-forecast.png)
+![Forecast](./screenshots/Screenshot 2.png)
 
 ### Day & Night Mode
 
-![Night Mode](./screenshots/night-mode.png)
+![Night Mode](./screenshots/Screenshot 3.png)
 
 ## 📂 GitHub Repository
 
