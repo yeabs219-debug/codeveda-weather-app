@@ -2,7 +2,7 @@ import React, { useState ,useEffect } from 'react'
 import searchIcon from '../assets/search.png'
 import { searchCities } from '../services/weatherService'
 import { useDebounce } from 'react-use'
-const SearchAutoComplete = ({search}) => {
+const SearchAutoComplete = ({search ,setError}) => {
   const [query ,setQuery  ]= useState("")
   const [debouncedQuery ,setDebouncedQuery] =useState("")
   const [suggestions ,setSuggestions] = useState([])
@@ -19,8 +19,15 @@ const SearchAutoComplete = ({search}) => {
            setSuggestions([])
            return;
           }
-      const data = await searchCities(debouncedQuery)
+       try {
+      const data = await searchCities(debouncedQuery);
+
       setSuggestions(data);
+      setError("");
+    } catch (error) {
+      setSuggestions([]);
+      setError(error.message);
+    }
     }
 
    fetchSuggestions()

@@ -8,11 +8,11 @@ export const searchCities = async(cityQuery)=>{
       const response = await fetch(url);
       
       if(!response.ok){
-      throw new Error('error fetching weather data')
+      throw new Error('City not found please try another city or check spelling')
       return;
      }
      const data = await response.json();
-    return(data);
+     return(data);
 
     } catch (error) {
       console.error(error)
@@ -89,7 +89,13 @@ const formatDailyForecast=(data)=>{
 
 }
 const formatHourlyForecast = (data) => {
-  return data.forecast.forecastday[0].hour.map((hour) => ({
+  const currentTime =  Date.now();
+    const  upcomingHours =  data.forecast.forecastday[0].hour.filter(
+      (hour)=> new Date(hour.time).getTime() > currentTime
+    )
+    console.log(upcomingHours)
+
+  return upcomingHours.map((hour) => ({
     date: hour.time.split(' ')[0],
     hour: hour.time.split(' ')[1],
     icon: hour.condition.icon,

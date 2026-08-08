@@ -16,8 +16,11 @@ const Weather = ({isDay ,setIsDay}) => {
   const [error, setError] = useState(null)
 
   const search = async (query = 'Addis Ababa') => {
+
     const cityName = query.trim() || 'Addis Ababa'
     setWeatherData(null)
+    setDailyForecastData(null)
+    setHourlyForecast(null)
     setIsLoading(true)
     setError(null)
     try {
@@ -30,10 +33,10 @@ const Weather = ({isDay ,setIsDay}) => {
        setHourlyForecast(hourlyForecast)
        setIsDay(isDay)
 
-    } catch (fetchError) {
+    } catch (error) {
       setWeatherData(null)
       setError('Unable to load weather data. Please try another city.')
-      console.error(fetchError)
+      console.error(error)
     } finally {
       setIsLoading(false)
     }
@@ -46,7 +49,7 @@ const Weather = ({isDay ,setIsDay}) => {
   return (
     <div className="weather-container">
       <div className="weather-search-row">
-        <SearchAutoComplete search={search} />
+        <SearchAutoComplete search={search} setError={setError} />
       </div>
 
       <div className="weather-content">
@@ -72,8 +75,8 @@ const Weather = ({isDay ,setIsDay}) => {
           </div>
         )}
       </div>
-      {
-      error ? (<p className="weather-status weather-error">{error}</p>) :
+      {isLoading?(<>LOADING ...</>):
+      error ? (<p className="weather-status weather-error">Unable to find forecast please try again.</p>) :
         dailyForecastData && (
           <>
                 <Forecast dailyForecastData={dailyForecastData}/>
