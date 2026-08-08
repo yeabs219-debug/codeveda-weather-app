@@ -1,7 +1,6 @@
 import React ,{ useState }from 'react'
 import Weather from './components/Weather'
 import SearchAutoComplete from './utils/SearchAutoComplete'
-import Forecast from './components/forecast'
 import dayBackground from './assets/dayBackground.jpg'
 import nightBackground from './assets/nightBackground.jpg'
 const App = () => {
