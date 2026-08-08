@@ -6,9 +6,11 @@ import WeatherDetails from './WeatherDetails'
 import Forecast from './Forecast'
 import { getCurrentWeather , getForecast, searchCities} from '../services/weatherService'
 import Spinner from './Spinner'
+import HourlyForecast from './HourlyForecast'
 
-const Weather = () => {
-  const [forecastData ,setForecastData] = useState(null)
+const Weather = ({isDay ,setIsDay}) => {
+  const [dailyForecastData ,setDailyForecastData] = useState(null)
+  const [hourlyForecast ,setHourlyForecast] = useState(null)
   const [weatherData, setWeatherData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -20,11 +22,13 @@ const Weather = () => {
     setError(null)
     try {
       
-      const currentData = await getCurrentWeather(cityName);
-      const forecast = await getForecast(cityName);
+      const {currentData ,isDay} = await getCurrentWeather(cityName);
+      const {dailyForecast , hourlyForecast} = await getForecast(cityName);
 
        setWeatherData(currentData)
-       setForecastData(forecast)
+       setDailyForecastData(dailyForecast)
+       setHourlyForecast(hourlyForecast)
+       setIsDay(isDay)
 
     } catch (fetchError) {
       setWeatherData(null)
@@ -70,8 +74,11 @@ const Weather = () => {
       </div>
       {
       error ? (<p className="weather-status weather-error">{error}</p>) :
-        forecastData && (
-                <Forecast forecastData={forecastData}/>
+        dailyForecastData && (
+          <>
+                <Forecast dailyForecastData={dailyForecastData}/>
+                <HourlyForecast HourlyForecastData = {hourlyForecast}/>
+          </>
         )
       }
     </div>

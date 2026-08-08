@@ -30,7 +30,8 @@ export const getCurrentWeather = async (cityName)=>{
       return;
      }
      const data = await response.json()
-     const weather = {
+     const isDay =  data.current.is_day;
+     const currentData = {
         humidity: toInteger(data.current.humidity),
         windSpeed: toInteger(data.current.wind_kph),
         city: data.location.name,
@@ -43,7 +44,7 @@ export const getCurrentWeather = async (cityName)=>{
         chanceOfRain: data.current.chance_of_rain ?? 0,
         pressure: toInteger(data.current.pressure_mb),
       }
-     return weather
+     return {currentData ,isDay}
   } catch (error) {
     console.error(error)
     throw error
@@ -61,7 +62,21 @@ export const getForecast = async(cityName)=>{
       return;
      }
     const data = await response.json()
-    const forecast = data.forecast.forecastday.map((day) => (
+
+    const dailyForecast = formatDailyForecast(data)
+    const hourlyForecast = formatHourlyForecast(data)
+
+      return {dailyForecast ,hourlyForecast};
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+const formatDailyForecast=(data)=>{
+  console.log('daily forecast running')
+  return(
+    data.forecast.forecastday.map((day) => (
       { date: day.date,
         day: dateToDay(day.date),
         maxTemperature: Math.floor(day.day.maxtemp_c), 
@@ -69,13 +84,16 @@ export const getForecast = async(cityName)=>{
         condition: day.day.condition.text, 
         icon: day.day.condition.icon,
         chanceOfRain: day.day.daily_chance_of_rain, 
-      })); 
-      console.log(forecast.day)
-      console.log("API returned:", data.forecast.forecastday.length);
+      }))
+    )
 
-      return forecast;
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+}
+const formatHourlyForecast = (data) => {
+  return data.forecast.forecastday[0].hour.map((hour) => ({
+    date: hour.time.split(' ')[0],
+    hour: hour.time.split(' ')[1],
+    icon: hour.condition.icon,
+    temperature: Math.floor(hour.temp_c),
+    condition: hour.condition.text,
+  }))
 }

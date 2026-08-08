@@ -1,13 +1,13 @@
 import React from 'react'
 
-const Forecast = ({forecastData}) => {
-  console.log(forecastData)
+const Forecast = ({dailyForecastData}) => {
+  console.log(dailyForecastData)
   return (
     <div className='forecast-container'>
       <h2>Forecast of upcoming days</h2>
     <div className="forecast-list">
     {
-      forecastData.map((day , index)=> (
+      dailyForecastData.map((day , index)=> (
         <div className="forecast-card" key={index}>
         <div className="forecast-date">
           <span className="date">{day.date}</span>
@@ -17,7 +17,7 @@ const Forecast = ({forecastData}) => {
         <img src={day.icon} alt="Clear sky" />
 
         <div className="details">
-          <p className="temp">{day.maxTemperature}</p>
+          <p className="temp">{day.maxTemperature}°C</p>
           <p className="condition">{day.condition}</p>
         </div>
       </div>
