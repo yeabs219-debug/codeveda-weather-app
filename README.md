@@ -10,15 +10,15 @@ A responsive weather application built with **React.js** and **WeatherAPI**. The
 
 ### city suggestion
 
-![Current Weather](./screenshots/Screenshot 1.png)
+![Current Weather](./screenshots/Screenshot1.png)
 
 ### Hourly & Daily Forecast
 
-![Forecast](./screenshots/Screenshot 2.png)
+![Forecast](./screenshots/Screenshot2.png)
 
 ### Day & Night Mode
 
-![Night Mode](./screenshots/Screenshot 3.png)
+![Night Mode](./screenshots/Screenshot3.png)
 
 ## 📂 GitHub Repository
 
